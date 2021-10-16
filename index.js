@@ -3,7 +3,6 @@ const ytdl = require("ytdl-core");
 const { Client, Intents } = require("discord.js");
 const axios = require("axios");
 
-// Create a new client instance
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES] });
 const {
   AudioPlayerStatus,
@@ -28,6 +27,9 @@ client.once("ready", () => {
 
 client.on("interactionCreate", async interaction => {
   if (!interaction.isCommand()) return;
+  if (!interaction.member.id != "264489096188002338") {
+    return await interaction.reply("You are not authorized to do this.");
+  }
   if (interaction.commandName === "join") {
     await join(interaction);
   } else if (interaction.commandName === "play") {
@@ -110,12 +112,12 @@ async function play(interaction) {
   const song = interaction.options.getString("song");
   const url = interaction.options.getString("url");
   let songurl;
-  //TODO make song do a yt search, pull url, pull id
-  //TODO make the bot respond with "Now playing (song) or Added (song) to queue"
+
   if (url) {
     songurl = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
     if (!songurl) {
       interaction.reply({ content: "Please use a valid youtube video url", ephemeral: true });
+      return;
     }
   }
 
@@ -156,27 +158,6 @@ async function searchSong(song) {
     }
   });
   return { title: data.items[0].snippet.title, videoId: data.items[0].id.videoId };
-  // console.log(data.items[0].snippet.title);
 }
 
 client.login(token);
-
-// ytdl("http://www.youtube.com/watch?v=NK7WWbXlkj4", { filter: "audioonly" }).pipe(
-//   fs.createWriteStream("audio.mp3"),
-//   "mp3"
-// );
-
-// const connection = joinVoiceChannel({
-// 	channelId: voiceChannel.id,
-// 	guildId: guild.id,
-// 	adapterCreator: guild.voiceAdapterCreator,
-// });
-
-// const stream = ytdl('youtube link', { filter: 'audioonly' });
-// const resource = createAudioResource(stream, { inputType: StreamType.Arbitrary });
-// const player = createAudioPlayer();
-
-// player.play(resource);
-// connection.subscribe(player);
-
-// player.on(AudioPlayerStatus.Idle, () => connection.destroy());

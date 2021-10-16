@@ -9,14 +9,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/opus": "^0.6.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@discordjs/voice": "^0.6.0",
     "axios": "^0.23.0",
     "discord-api-types": "^0.23.1",
     "discord.js": "^13.2.0",
     "ffmpeg-static": "^4.4.0",
-    "sodium": "^3.0.2",
+    "libsodium-wrappers": "^0.7.9",
+    "opusscript": "^0.0.8",
     "ytdl-core": "^4.9.1"
   }
 }
